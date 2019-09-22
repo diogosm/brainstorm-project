@@ -29,3 +29,7 @@
 [https://makerfabs.com/wiki/index.php?title=LoRa_Radio_Shield(868MHz)](https://makerfabs.com/wiki/index.php?title=LoRa_Radio_Shield(868MHz))
 
 [https://community.particle.io/t/my-attempt-at-rf95-lora/40573](https://community.particle.io/t/my-attempt-at-rf95-lora/40573)
+
+[https://github.com/hallard/RadioHead](https://github.com/hallard/RadioHead)
+
+[https://circuitdigest.com/microcontroller-projects/raspberry-pi-with-lora-peer-to-peer-communication-with-arduino](https://circuitdigest.com/microcontroller-projects/raspberry-pi-with-lora-peer-to-peer-communication-with-arduino)
