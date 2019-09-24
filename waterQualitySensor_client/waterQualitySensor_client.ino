@@ -44,8 +44,6 @@ void loop() {
   Serial.print("Msg enviada = ");
   Serial.println((char*)valueToSend);
 #endif
-  
-  
 
   delay(2000);
 }
