@@ -1,5 +1,7 @@
 #include <SPI.h>
 #include <LoRa.h>
+#include <DS3232RTC.h>      // https://github.com/JChristensen/DS3232RTC
+#include <Streaming.h>      // http://arduiniana.org/libraries/streaming/
 
 //variaveis globais
 #define RF95_FREQ 868E6
@@ -9,6 +11,7 @@ const float a = -6.0;    /* usados na equacao do pH */
 const float b = 25.0;    /* usados na equacao do pH */ 
 
 void setup() {
+  printSettingHeader();
   // put your setup code here, to run once:
   Serial.begin(9600);
   while (!Serial) ; // Wait for serial port to be available
@@ -17,6 +20,18 @@ void setup() {
     Serial.println("Starting LoRa failed");
     while(1);  
   }
+
+  /** Seta config inicial para o RTC **/
+  setSyncProvider(RTC.get);
+  if (timeStatus() != timeSet)
+    Serial.println("Starting RTC get time failed");
+
+#if defined(DEBUG)
+  Serial.println("Trying to get time set");
+  printTempo();
+  Serial.println();
+#endif
+  delay(1000);
 }
 
 void loop() {
@@ -48,6 +63,12 @@ void loop() {
   delay(2000);
 }
 
+void printSettingHeader(){
+  Serial.println("--------------------------------------------------");
+  Serial.println("---------------------SETTING----------------------");
+  Serial.println("--------------------------------------------------");  
+}
+
 void printHeader(){
   Serial.println("--------------------------------------------------");
   Serial.println("---------------------RUNNING----------------------");
@@ -72,4 +93,45 @@ float getPhValue(){
 #endif
 
   return value;
+}
+
+void printTempo(){
+  time_t t;
+
+  t = now();
+  printDateTime(t);
+}
+
+// print date and time to Serial
+void printDateTime(time_t t)
+{
+    printDate(t);
+    Serial << ' ';
+    printTime(t);
+}
+
+// print time to Serial
+void printTime(time_t t)
+{
+    printI00(hour(t), ':');
+    printI00(minute(t), ':');
+    printI00(second(t), ' ');
+}
+
+// print date to Serial
+void printDate(time_t t)
+{
+    printI00(day(t), 0);
+    Serial << monthShortStr(month(t)) << _DEC(year(t));
+}
+
+// Print an integer in "00" format (with leading zero),
+// followed by a delimiter character to Serial.
+// Input value assumed to be between 0 and 99.
+void printI00(int val, char delim)
+{
+    if (val < 10) Serial << '0';
+    Serial << _DEC(val);
+    if (delim > 0) Serial << delim;
+    return;
 }
