@@ -5,11 +5,13 @@
 #include <RH_RF95.h>
 
 //variaveis globais
-//#define RF95_FREQ 868E6
-// Singleton instance of the radio driver
 RH_RF95 rf95;
 #define DEBUG true
 const int analogPinA0 = A0;
+/*
+ * Variaveis a serem utilizadas na equacao do primeiro grau
+ * que modela a transformacao da corrente para pH
+ */
 const float a = -6.0;    /* usados na equacao do pH */ 
 const float b = 25.0;    /* usados na equacao do pH */ 
 
@@ -19,13 +21,6 @@ void setup() {
   Serial.begin(9600);
   while (!Serial) ; // Wait for serial port to be available
   
-  /*if(!LoRa.begin(RF95_FREQ)){
-    Serial.println("Starting LoRa failed");
-    while(1);  
-  }
-  LoRa.setFrequency(868E6);
-  LoRa.setSignalBandwidth(125E3);*/
-  /** Seta config inicial para o RTC **/
   if (!rf95.init())
     Serial.println("init failed");
 
@@ -34,7 +29,8 @@ void setup() {
   rf95.setSignalBandwidth(500000);
   rf95.setSpreadingFactor(8);
   rf95.setCodingRate4(6);
-  
+
+  /** Seta config inicial para o RTC **/
   setSyncProvider(RTC.get);
   if (timeStatus() != timeSet)
     Serial.println("Starting RTC get time failed");
@@ -65,10 +61,6 @@ void loop() {
   dtostrf(value, 0, 10, valueToSend);
   rf95.send(valueToSend, sizeof(valueToSend));
   rf95.waitPacketSent();
-  //LoRa.beginPacket();
-  //LoRa.print((char*)valueToSend);
-  //LoRa.print("A");
-  //LoRa.endPacket();
 
 #if defined(DEBUG)
   //Lora testing...
