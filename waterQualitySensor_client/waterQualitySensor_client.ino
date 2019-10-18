@@ -110,6 +110,14 @@ void printTempo(){
   printDateTime(t);
 }
 
+/*
+ * @TODO
+ *  fazer a funcao de pegar o tempo e enviar pelo LoRa
+ */
+String getTempo(){
+  String ans = "";
+}
+
 // print date and time to Serial
 void printDateTime(time_t t)
 {
