@@ -1,5 +1,9 @@
 # brainstorm-project
 
+## Running MQTT docker
+
+https://hub.docker.com/_/eclipse-mosquitto :stuck_out_tongue_closed_eyes:
+
 ## Referências
 
 [https://scidle.com/how-to-use-a-ph-sensor-with-arduino/](https://scidle.com/how-to-use-a-ph-sensor-with-arduino/)
